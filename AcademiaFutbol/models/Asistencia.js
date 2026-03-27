@@ -8,4 +8,4 @@ const asistenciaSchema = new mongoose.Schema({
   observaciones: { type: String, required: false }
 }, { collection: "Asistencias" });
 
-module.exports = mongoose.model('Asistencia', asistenciaSchema);
+module.exports = mongoose.model('Asistencias', asistenciaSchema);
