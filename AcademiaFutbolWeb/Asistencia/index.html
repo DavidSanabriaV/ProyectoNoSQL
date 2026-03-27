@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Lista de Asistencia</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container mt-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Lista de Asistencia</h1>
+
+            <a href="create.html" class="btn btn-success">
+                Agregar
+            </a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-primary table-striped">
+                <thead>
+                    <tr>
+                        <th>Jugador ID</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablademuestradedatos">
+                    <!-- datos dinámicos -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+
+            listardatos();
+
+            function listardatos() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:3000/proyecto/asistencia",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        cargadatos(response);
+                    },
+                    error: function () {
+                        alert("Error al cargar los datos");
+                    }
+                });
+            }
+
+            function cargadatos(data) {
+                const $tabla = $("#tablademuestradedatos");
+                $tabla.empty();
+
+                data.forEach((elemento) => {
+
+                    let botonEliminar = "";
+
+                    if (elemento._id) {
+                        botonEliminar = `
+                <button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">
+                    Eliminar
+                </button>
+            `;
+                    } else {
+                        botonEliminar = `<span class="text-muted">No eliminable</span>`;
+                    }
+
+                    let botonActualizar = "";
+
+                    if (elemento._id) {
+
+                        botonActualizar = `
+                        <a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a>`;
+                    } else {
+                        botonActualizar = `<span class="text-muted">No actualizable</span>`;
+                    }
+
+                    let fila = `<tr>
+            <td>${elemento.jugador_id}</td>
+            <td>${elemento.fecha}</td>
+            <td>${elemento.estado}</td>
+            <td>${elemento.observaciones}</td>
+            <td>${botonEliminar}</td>
+            <td>${botonActualizar}</td>
+        </tr>`;
+
+                    $tabla.append(fila);
+                });
+            }
+
+            $(document).on("click", ".btn-eliminar", function () {
+                let id = $(this).data("id");
+
+                if (confirm("¿Seguro que deseas eliminar este registro?")) {
+                    eliminarDato(id);
+                }
+            });
+
+            function eliminarDato(id) {
+                $.ajax({
+                    type: "DELETE",
+                    url: `http://localhost:3000/proyecto/asistencia/${id}`,
+                    success: function () {
+                        alert("Registro eliminado correctamente");
+                        listardatos();
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert("Error al eliminar");
+                    }
+                });
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

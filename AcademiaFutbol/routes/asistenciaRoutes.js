@@ -9,17 +9,24 @@ router.get("/", async (req, res) => {
   res.json(data);
 });
 
+// GET por ID
+router.get("/:id", async (req, res) => {
+  const dato = await Asistencia.findOne({ _id: Number(req.params.id) });
+  res.json(dato);
+});
+
 // POST
 router.post("/", async (req, res) => {
-  const nuevo = new Asistencia(req.body);
+  const count = await Asistencia.countDocuments();
+  const nuevo = new Asistencia({ _id: count + 1, ...req.body });
   const guardado = await nuevo.save();
   res.json(guardado);
 });
 
 // PUT
 router.put("/:id", async (req, res) => {
-  const actualizado = await Asistencia.findByIdAndUpdate(
-    req.params.id,
+  const actualizado = await Asistencia.findOneAndUpdate(
+    { _id: Number(req.params.id) },
     req.body,
     { new: true }
   );
@@ -28,7 +35,7 @@ router.put("/:id", async (req, res) => {
 
 // DELETE
 router.delete("/:id", async (req, res) => {
-  const eliminado = await Asistencia.findByIdAndDelete(req.params.id);
+  const eliminado = await Asistencia.findOneAndDelete({ _id: Number(req.params.id) });
   res.json(eliminado);
 });
 
