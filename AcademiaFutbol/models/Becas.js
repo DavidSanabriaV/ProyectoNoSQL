@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const becasSchema = new mongoose.Schema({
+  _id: { type: Number},
   jugador_id: { type: Number, required: true },
   tipo_beca: { type: String, required: true },
   porcentaje: { type: Number, required: true },
