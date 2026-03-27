@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Editar Categoría</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <main class="container mt-4">
+        <h1>Editar Categoría</h1>
+
+        <form id="formularioEditar">
+            <div class="mb-3">
+                <label class="form-label">Nombre Categoría</label>
+                <input type="text" class="form-control" id="nombre_categoria" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Rango Edad</label>
+                <input type="text" class="form-control" id="rango_edad" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Año Competencia</label>
+                <input type="number" class="form-control" id="anio_competencia" required>
+            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a href="index.html" class="btn btn-secondary">Volver</a>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+
+            const API = "http://localhost:3000/proyecto/categorias/";
+            const id = new URLSearchParams(window.location.search).get("id");
+
+            $.get(API + id, function (data) {
+                $("#nombre_categoria").val(data.nombre_categoria);
+                $("#rango_edad").val(data.rango_edad);
+                $("#anio_competencia").val(data.anio_competencia);
+            }).fail(function () {
+                alert("Error al cargar datos");
+            });
+
+            $("#formularioEditar").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "PUT",
+                    url: API + id,
+                    data: JSON.stringify({
+                        nombre_categoria: $("#nombre_categoria").val(),
+                        rango_edad: $("#rango_edad").val(),
+                        anio_competencia: Number($("#anio_competencia").val())
+                    }),
+                    contentType: "application/json",
+                    success: function () {
+                        alert("Actualizado correctamente");
+                        window.location.href = "index.html";
+                    },
+                    error: function () {
+                        alert("Error al actualizar");
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

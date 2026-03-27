@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <title>Lista de Becas</title>
+    <title>Lista de Categorías</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+
 <body>
     <main class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1>Lista de Becas</h1>
+            <h1>Lista de Categorías</h1>
             <a href="create.html" class="btn btn-success">Agregar</a>
         </div>
         <div class="table-responsive">
             <table class="table table-primary table-striped">
                 <thead>
                     <tr>
-                        <th>Jugador ID</th>
-                        <th>Tipo Beca</th>
-                        <th>Porcentaje</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
+                        <th>Nombre Categoría</th>
+                        <th>Rango Edad</th>
+                        <th>Año Competencia</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
@@ -34,7 +34,7 @@
     <script>
         $(document).ready(function () {
 
-            const API = "http://localhost:3000/proyecto/becas";
+            const API = "http://localhost:3000/proyecto/categorias";
 
             listardatos();
 
@@ -58,11 +58,9 @@
 
                 data.forEach((elemento) => {
                     let fila = `<tr>
-                        <td>${elemento.jugador_id}</td>
-                        <td>${elemento.tipo_beca}</td>
-                        <td>${elemento.porcentaje}%</td>
-                        <td>${elemento.fecha_inicio}</td>
-                        <td>${elemento.fecha_fin}</td>
+                        <td>${elemento.nombre_categoria}</td>
+                        <td>${elemento.rango_edad}</td>
+                        <td>${elemento.anio_competencia}</td>
                         <td><a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a></td>
                         <td><button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">Eliminar</button></td>
                     </tr>`;
@@ -90,4 +88,5 @@
         });
     </script>
 </body>
+
 </html>

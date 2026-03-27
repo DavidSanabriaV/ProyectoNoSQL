@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Academia Fútbol — Inicio</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body data-page="home">
+
+  <!-- El navbar y sidebar se inyectan desde navbar.js -->
+
+  <div class="layout">
+    <main class="main">
+
+      <div class="welcome-box">
+        <div style="font-size:2.2rem;margin-bottom:.5rem">⚽</div>
+        <h2>Panel de la API — Academia Fútbol</h2>
+        <p>Selecciona un módulo en la barra lateral para ver y probar sus endpoints.
+           Asegúrate de que el servidor esté corriendo en
+           <code style="background:#f4f4f4;padding:.1rem .4rem;border-radius:4px;font-size:.85em">localhost:3000</code>.
+        </p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-n">12</div><div class="stat-l">Módulos</div></div>
+        <div class="stat-card"><div class="stat-n">48</div><div class="stat-l">Endpoints</div></div>
+        <div class="stat-card"><div class="stat-n">4</div><div class="stat-l">Métodos HTTP</div></div>
+        <div class="stat-card"><div class="stat-n">v5</div><div class="stat-l">Express</div></div>
+      </div>
+
+      <div class="sidebar-group-label" style="padding:0 0 .7rem">Acceso rápido</div>
+      <div class="cards-grid">
+        <a class="card" href="pages/jugadores.html"><div class="card-icon">👤</div><div class="card-name">Jugadores</div><div class="card-path">/jugadores</div></a>
+        <a class="card" href="pages/entrenadores.html"><div class="card-icon">🧑‍🏫</div><div class="card-name">Entrenadores</div><div class="card-path">/entrenadores</div></a>
+        <a class="card" href="pages/equipos.html"><div class="card-icon">🏟️</div><div class="card-name">Equipos</div><div class="card-path">/equipos</div></a>
+        <a class="card" href="Categorias/index.html"><div class="card-icon">🏷️</div><div class="card-name">Categorías</div><div class="card-path">/categorias</div></a>
+        <a class="card" href="pages/partidos.html"><div class="card-icon">⚽</div><div class="card-name">Partidos</div><div class="card-path">/partidos</div></a>
+        <a class="card" href="pages/torneos.html"><div class="card-icon">🏆</div><div class="card-name">Torneos</div><div class="card-path">/torneos</div></a>
+        <a class="card" href="Asistencia/index.html"><div class="card-icon">📋</div><div class="card-name">Asistencia</div><div class="card-path">/asistencia</div></a>
+        <a class="card" href="pages/pagos.html"><div class="card-icon">💳</div><div class="card-name">Pagos</div><div class="card-path">/pagos</div></a>
+        <a class="card" href="Becas/index.html"><div class="card-icon">🎓</div><div class="card-name">Becas</div><div class="card-path">/becas</div></a>
+        <a class="card" href="pages/premios.html"><div class="card-icon">🏅</div><div class="card-name">Premios</div><div class="card-path">/premios</div></a>
+        <a class="card" href="pages/citasMedicas.html"><div class="card-icon">🩺</div><div class="card-name">Citas Médicas</div><div class="card-path">/citasMedicas</div></a>
+        <a class="card" href="pages/historialMedico.html"><div class="card-icon">📁</div><div class="card-name">Historial Médico</div><div class="card-path">/historialMedico</div></a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+  </footer>
+
+  <script src="js/navbar.js"></script>
+</body>
+</html>
