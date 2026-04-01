@@ -1,53 +1,57 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<title>Crear Equipo</title>
-<link rel="stylesheet" href="../css/style.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Crear Equipo</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+
 <body>
 
-<main class="container">
-<h1>Nuevo Equipo</h1>
+    <main class="container">
+        <h1>Nuevo Equipo</h1>
 
-<form id="form">
-    <input type="text" id="nombre_equipo" placeholder="Nombre del equipo" required class="form-control mb-3">
-    <input type="text" id="categoria" placeholder="Categoría" required class="form-control mb-3">
-    <input type="number" id="entrenador_id" placeholder="Entrenador ID" required class="form-control mb-3">
-    <input type="text" id="lista_jugadores" placeholder="IDs jugadores (ej: 1,2,3)" required class="form-control mb-3">
-    <input type="number" id="puntos" placeholder="Puntos" required class="form-control mb-3">
+        <form id="form">
+            <input type="text" id="nombre_equipo" placeholder="Nombre del equipo" required class="form-control mb-3">
+            <input type="text" id="categoria" placeholder="Categoría" required class="form-control mb-3">
+            <input type="number" id="entrenador_id" placeholder="Entrenador ID" required class="form-control mb-3">
+            <input type="text" id="lista_jugadores" placeholder="IDs jugadores (ej: 1,2,3)" required
+                class="form-control mb-3">
+            <input type="number" id="puntos" placeholder="Puntos" required class="form-control mb-3">
 
-    <button class="btn btn-primary">Guardar</button>
-    <a href="index.html" class="btn btn-secondary">Volver</a>
-</form>
-</main>
+            <button class="btn btn-primary">Guardar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
 
-<script>
-$("#form").submit(e=>{
-    e.preventDefault();
+    <script>
+        $("#form").submit(e => {
+            e.preventDefault();
 
-    const jugadores = $("#lista_jugadores").val()
-        .split(",")
-        .map(x => Number(x.trim()));
+            const jugadores = $("#lista_jugadores").val()
+                .split(",")
+                .map(x => Number(x.trim()));
 
-    $.ajax({
-        url:"http://localhost:3000/proyecto/equipos",
-        type:"POST",
-        contentType:"application/json",
-        data: JSON.stringify({
-            nombre_equipo:$("#nombre_equipo").val(),
-            categoria:$("#categoria").val(),
-            entrenador_id:Number($("#entrenador_id").val()),
-            lista_jugadores: jugadores,
-            puntos:Number($("#puntos").val())
-        }),
-        success:()=>{
-            alert("Equipo guardado");
-            location.href="index.html";
-        }
-    });
-});
-</script>
+            $.ajax({
+                url: "http://localhost:3000/proyecto/equipos",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    nombre_equipo: $("#nombre_equipo").val(),
+                    categoria: $("#categoria").val(),
+                    entrenador_id: Number($("#entrenador_id").val()),
+                    lista_jugadores: jugadores,
+                    puntos: Number($("#puntos").val())
+                }),
+                success: () => {
+                    alert("Equipo guardado");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
 
 </body>
+
 </html>
