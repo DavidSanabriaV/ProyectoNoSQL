@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Crear Entrenador</title>
+<link rel="stylesheet" href="../css/style.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+<main class="container">
+<h1>Nuevo Entrenador</h1>
+
+<form id="form">
+    <input type="text" id="nombre" placeholder="Nombre" required class="form-control mb-3">
+    <input type="text" id="especialidad" placeholder="Especialidad" required class="form-control mb-3">
+    <input type="number" id="experiencia" placeholder="Años de experiencia" required class="form-control mb-3">
+    <input type="text" id="telefono" placeholder="Teléfono" required class="form-control mb-3">
+    <input type="email" id="correo" placeholder="Correo" required class="form-control mb-3">
+
+    <button class="btn btn-primary">Guardar</button>
+    <a href="index.html" class="btn btn-secondary">Volver</a>
+</form>
+</main>
+
+<script>
+$("#form").submit(e=>{
+    e.preventDefault();
+
+    $.ajax({
+        url:"http://localhost:3000/proyecto/entrenadores",
+        type:"POST",
+        contentType:"application/json",
+        data: JSON.stringify({
+            nombre:$("#nombre").val(),
+            especialidad:$("#especialidad").val(),
+            experiencia:Number($("#experiencia").val()),
+            telefono:$("#telefono").val(),
+            correo:$("#correo").val()
+        }),
+        success:()=>{
+            alert("Entrenador guardado");
+            location.href="index.html";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

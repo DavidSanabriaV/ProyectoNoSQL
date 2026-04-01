@@ -1,35 +1,31 @@
 const express = require("express");
 const router = express.Router();
+const Equipos = require('../models/Equipos');
 
-const Equipo = require('../models/Equipos');
-
-// GET
 router.get("/", async (req, res) => {
-  const data = await Equipo.find();
-  res.json(data);
+  res.json(await Equipos.find());
 });
 
-// POST
+router.get("/:id", async (req, res) => {
+  res.json(await Equipos.findOne({ _id: Number(req.params.id) }));
+});
+
 router.post("/", async (req, res) => {
-  const nuevo = new Equipo(req.body);
-  const guardado = await nuevo.save();
-  res.json(guardado);
+  const count = await Equipos.countDocuments();
+  const nuevo = new Equipos({ _id: count + 1, ...req.body });
+  res.json(await nuevo.save());
 });
 
-// PUT
 router.put("/:id", async (req, res) => {
-  const actualizado = await Equipo.findByIdAndUpdate(
-    req.params.id,
+  res.json(await Equipos.findOneAndUpdate(
+    { _id: Number(req.params.id) },
     req.body,
     { new: true }
-  );
-  res.json(actualizado);
+  ));
 });
 
-// DELETE
 router.delete("/:id", async (req, res) => {
-  const eliminado = await Equipo.findByIdAndDelete(req.params.id);
-  res.json(eliminado);
+  res.json(await Equipos.findOneAndDelete({ _id: Number(req.params.id) }));
 });
 
 module.exports = router;

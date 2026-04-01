@@ -1,35 +1,31 @@
 const express = require("express");
 const router = express.Router();
-
 const CitasMedicas = require('../models/CitasMedicas');
 
-// GET
 router.get("/", async (req, res) => {
-  const data = await CitasMedicas.find();
-  res.json(data);
+  res.json(await CitasMedicas.find());
 });
 
-// POST
+router.get("/:id", async (req, res) => {
+  res.json(await CitasMedicas.findOne({ _id: Number(req.params.id) }));
+});
+
 router.post("/", async (req, res) => {
-  const nuevo = new CitasMedicas(req.body);
-  const guardado = await nuevo.save();
-  res.json(guardado);
+  const count = await CitasMedicas.countDocuments();
+  const nuevo = new CitasMedicas({ _id: count + 1, ...req.body });
+  res.json(await nuevo.save());
 });
 
-// PUT
 router.put("/:id", async (req, res) => {
-  const actualizado = await CitasMedicas.findByIdAndUpdate(
-    req.params.id,
+  res.json(await CitasMedicas.findOneAndUpdate(
+    { _id: Number(req.params.id) },
     req.body,
     { new: true }
-  );
-  res.json(actualizado);
+  ));
 });
 
-// DELETE
 router.delete("/:id", async (req, res) => {
-  const eliminado = await CitasMedicas.findByIdAndDelete(req.params.id);
-  res.json(eliminado);
+  res.json(await CitasMedicas.findOneAndDelete({ _id: Number(req.params.id) }));
 });
 
 module.exports = router;

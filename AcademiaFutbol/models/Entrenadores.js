@@ -1,7 +1,7 @@
-//Crear un modelo de datos, similar a las clases
 const mongoose = require('mongoose');
 
 const entrenadoresSchema = new mongoose.Schema({
+  _id: { type: Number },
   nombre: { type: String, required: true },
   especialidad: { type: String, required: true },
   experiencia: { type: Number, required: true },
