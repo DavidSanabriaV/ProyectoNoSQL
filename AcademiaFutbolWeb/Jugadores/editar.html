@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Editar Jugador</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Editar Jugador</h1>
+
+        <form id="form">
+            <input type="text" id="nombre" class="form-control mb-3">
+            <input type="number" id="edad" class="form-control mb-3">
+            <input type="text" id="posicion" class="form-control mb-3">
+            <input type="text" id="categoria" class="form-control mb-3">
+            <input type="number" id="equipo_id" class="form-control mb-3">
+            <input type="text" id="estado_salud" class="form-control mb-3">
+
+            <button class="btn btn-primary">Actualizar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        const API = "http://localhost:3000/proyecto/jugadores/";
+        const id = new URLSearchParams(window.location.search).get("id");
+
+        $.get(API + id, d => {
+            $("#nombre").val(d.nombre);
+            $("#edad").val(d.edad);
+            $("#posicion").val(d.posicion);
+            $("#categoria").val(d.categoria);
+            $("#equipo_id").val(d.equipo_id);
+            $("#estado_salud").val(d.estado_salud);
+        });
+
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: API + id,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    nombre: $("#nombre").val(),
+                    edad: Number($("#edad").val()),
+                    posicion: $("#posicion").val(),
+                    categoria: $("#categoria").val(),
+                    equipo_id: Number($("#equipo_id").val()),
+                    estado_salud: $("#estado_salud").val()
+                }),
+                success: () => {
+                    alert("Actualizado correctamente");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

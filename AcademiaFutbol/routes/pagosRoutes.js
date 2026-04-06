@@ -1,35 +1,31 @@
 const express = require("express");
 const router = express.Router();
-
 const Pagos = require('../models/Pagos');
 
-// GET
 router.get("/", async (req, res) => {
-  const data = await Pagos.find();
-  res.json(data);
+  res.json(await Pagos.find());
 });
 
-// POST
+router.get("/:id", async (req, res) => {
+  res.json(await Pagos.findOne({ _id: Number(req.params.id) }));
+});
+
 router.post("/", async (req, res) => {
-  const nuevo = new Pagos(req.body);
-  const guardado = await nuevo.save();
-  res.json(guardado);
+  const count = await Pagos.countDocuments();
+  const nuevo = new Pagos({ _id: count + 1, ...req.body });
+  res.json(await nuevo.save());
 });
 
-// PUT
 router.put("/:id", async (req, res) => {
-  const actualizado = await Pagos.findByIdAndUpdate(
-    req.params.id,
+  res.json(await Pagos.findOneAndUpdate(
+    { _id: Number(req.params.id) },
     req.body,
     { new: true }
-  );
-  res.json(actualizado);
+  ));
 });
 
-// DELETE
 router.delete("/:id", async (req, res) => {
-  const eliminado = await Pagos.findByIdAndDelete(req.params.id);
-  res.json(eliminado);
+  res.json(await Pagos.findOneAndDelete({ _id: Number(req.params.id) }));
 });
 
 module.exports = router;

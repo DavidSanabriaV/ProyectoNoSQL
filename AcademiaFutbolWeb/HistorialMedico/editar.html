@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Editar Historial Médico</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Editar Historial Médico</h1>
+
+        <form id="form">
+            <input type="number" id="jugador_id" class="form-control mb-3">
+            <input type="text" id="tipo_lesion" class="form-control mb-3">
+            <input type="date" id="fecha_inicio" class="form-control mb-3">
+            <input type="date" id="fecha_fin" class="form-control mb-3">
+            <input type="text" id="tratamiento" class="form-control mb-3">
+            <input type="text" id="medico" class="form-control mb-3">
+
+            <button class="btn btn-primary">Actualizar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        const API = "http://localhost:3000/proyecto/historialMedico/";
+        const id = new URLSearchParams(window.location.search).get("id");
+
+        $.get(API + id, d => {
+            $("#jugador_id").val(d.jugador_id);
+            $("#tipo_lesion").val(d.tipo_lesion);
+            $("#fecha_inicio").val(d.fecha_inicio || '');
+            $("#fecha_fin").val(d.fecha_fin || '');
+            $("#tratamiento").val(d.tratamiento);
+            $("#medico").val(d.medico);
+        });
+
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: API + id,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    jugador_id: Number($("#jugador_id").val()),
+                    tipo_lesion: $("#tipo_lesion").val(),
+                    fecha_inicio: $("#fecha_inicio").val() || null,
+                    fecha_fin: $("#fecha_fin").val() || null,
+                    tratamiento: $("#tratamiento").val(),
+                    medico: $("#medico").val()
+                }),
+                success: () => {
+                    alert("Actualizado correctamente");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Crear Pago</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Nuevo Pago</h1>
+
+        <form id="form">
+            <input type="number" id="jugador_id" placeholder="Jugador ID" required class="form-control mb-3">
+            <input type="number" id="monto" placeholder="Monto" step="0.01" required class="form-control mb-3">
+            <input type="date" id="fecha_pago" placeholder="Fecha Pago" required class="form-control mb-3">
+            <input type="text" id="metodo" placeholder="Método (ej: Transferencia, Efectivo)" required class="form-control mb-3">
+            <select id="estado" required class="form-control mb-3">
+                <option value="">Selecciona Estado</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Completado">Completado</option>
+                <option value="Rechazado">Rechazado</option>
+            </select>
+
+            <button class="btn btn-primary">Guardar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: "http://localhost:3000/proyecto/pagos",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    jugador_id: Number($("#jugador_id").val()),
+                    monto: Number($("#monto").val()),
+                    fecha_pago: $("#fecha_pago").val(),
+                    metodo: $("#metodo").val(),
+                    estado: $("#estado").val()
+                }),
+                success: () => {
+                    alert("Pago guardado");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

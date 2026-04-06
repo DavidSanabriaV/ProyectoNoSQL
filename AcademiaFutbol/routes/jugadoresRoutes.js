@@ -1,35 +1,31 @@
 const express = require("express");
 const router = express.Router();
-
 const Jugadores = require('../models/Jugadores');
 
-// GET
 router.get("/", async (req, res) => {
-  const data = await Jugadores.find();
-  res.json(data);
+  res.json(await Jugadores.find());
 });
 
-// POST
+router.get("/:id", async (req, res) => {
+  res.json(await Jugadores.findOne({ _id: Number(req.params.id) }));
+});
+
 router.post("/", async (req, res) => {
-  const nuevo = new Jugadores(req.body);
-  const guardado = await nuevo.save();
-  res.json(guardado);
+  const count = await Jugadores.countDocuments();
+  const nuevo = new Jugadores({ _id: count + 1, ...req.body });
+  res.json(await nuevo.save());
 });
 
-// PUT
 router.put("/:id", async (req, res) => {
-  const actualizado = await Jugadores.findByIdAndUpdate(
-    req.params.id,
+  res.json(await Jugadores.findOneAndUpdate(
+    { _id: Number(req.params.id) },
     req.body,
     { new: true }
-  );
-  res.json(actualizado);
+  ));
 });
 
-// DELETE
 router.delete("/:id", async (req, res) => {
-  const eliminado = await Jugadores.findByIdAndDelete(req.params.id);
-  res.json(eliminado);
+  res.json(await Jugadores.findOneAndDelete({ _id: Number(req.params.id) }));
 });
 
 module.exports = router;

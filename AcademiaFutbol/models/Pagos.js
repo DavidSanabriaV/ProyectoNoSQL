@@ -1,7 +1,7 @@
-//Crear un modelo de datos, similar a las clases
 const mongoose = require('mongoose');
 
 const pagosSchema = new mongoose.Schema({
+  _id: { type: Number },
   jugador_id: { type: Number, required: true },
   monto: { type: Number, required: true },
   fecha_pago: { type: String, required: true },
