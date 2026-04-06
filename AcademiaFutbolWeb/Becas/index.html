@@ -1,39 +1,58 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Lista de Becas</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Becas — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-    <main class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1>Lista de Becas</h1>
-            <a href="create.html" class="btn btn-success">Agregar</a>
+
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
         </div>
-        <div class="table-responsive">
-            <table class="table table-primary table-striped">
-                <thead>
-                    <tr>
-                        <th>Jugador ID</th>
-                        <th>Tipo Beca</th>
-                        <th>Porcentaje</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody id="tablademuestradedatos"></tbody>
-            </table>
-        </div>
-    </main>
+    </nav>
+
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Becas</h1>
+                    <p>Gestiona las becas y ayudas otorgadas a jugadores</p>
+                </div>
+            </div>
+
+            <a href="create.html" class="btn btn-success mb-3">+ Crear Beca</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jugador ID</th>
+                            <th>Tipo Beca</th>
+                            <th>Porcentaje</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablademuestradedatos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         $(document).ready(function () {
-
             const API = "http://localhost:3000/proyecto/becas";
 
             listardatos();
@@ -60,7 +79,7 @@
                     let fila = `<tr>
                         <td>${elemento.jugador_id}</td>
                         <td>${elemento.tipo_beca}</td>
-                        <td>${elemento.porcentaje}%</td>
+                        <td><strong>${elemento.porcentaje}%</strong></td>
                         <td>${elemento.fecha_inicio}</td>
                         <td>${elemento.fecha_fin}</td>
                         <td><a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a></td>
@@ -86,8 +105,8 @@
                     });
                 }
             });
-
         });
     </script>
+
 </body>
 </html>

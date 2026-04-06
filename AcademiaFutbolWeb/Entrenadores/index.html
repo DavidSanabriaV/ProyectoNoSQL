@@ -1,34 +1,55 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Entrenadores</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenadores — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container">
-        <h1>Lista de Entrenadores</h1>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
 
-        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Entrenadores</h1>
+                    <p>Gestiona el equipo de entrenadores y su información de contacto</p>
+                </div>
+            </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Especialidad</th>
-                    <th>Experiencia</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla"></tbody>
-        </table>
-    </main>
+            <a href="create.html" class="btn btn-success mb-3">+ Agregar Entrenador</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Experiencia</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         const API = "http://localhost:3000/proyecto/entrenadores";
@@ -45,7 +66,7 @@
                 <td>${e.telefono}</td>
                 <td>${e.correo}</td>
                 <td><a href="editar.html?id=${e._id}" class="btn btn-warning btn-sm">Editar</a></td>
-                <td><button onclick="eliminar(${e._id})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                <td><button onclick="eliminar('${e._id}')" class="btn btn-danger btn-sm">Eliminar</button></td>
                 </tr>
             `);
                 });
@@ -53,7 +74,7 @@
         }
 
         function eliminar(id) {
-            if (confirm("¿Eliminar?")) {
+            if (confirm("¿Confirmar eliminación?")) {
                 $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
             }
         }
@@ -62,5 +83,4 @@
     </script>
 
 </body>
-
 </html>

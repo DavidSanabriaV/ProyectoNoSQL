@@ -1,35 +1,56 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Jugadores</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugadores — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container">
-        <h1>Lista de Jugadores</h1>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
 
-        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Jugadores</h1>
+                    <p>Gestiona los datos de todos los jugadores inscritos en la academia</p>
+                </div>
+            </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Edad</th>
-                    <th>Posición</th>
-                    <th>Categoría</th>
-                    <th>Equipo ID</th>
-                    <th>Estado Salud</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla"></tbody>
-        </table>
-    </main>
+            <a href="create.html" class="btn btn-success mb-3">+ Agregar Jugador</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Posición</th>
+                            <th>Categoría</th>
+                            <th>Equipo ID</th>
+                            <th>Estado Salud</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         const API = "http://localhost:3000/proyecto/jugadores";
@@ -55,7 +76,7 @@
         }
 
         function eliminar(id) {
-            if (confirm("¿Eliminar?")) {
+            if (confirm("¿Confirmar eliminación?")) {
                 $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
             }
         }
@@ -64,5 +85,4 @@
     </script>
 
 </body>
-
 </html>

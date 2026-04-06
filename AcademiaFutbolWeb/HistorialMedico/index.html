@@ -1,35 +1,56 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Historial Médico</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial Médico — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container">
-        <h1>Lista de Historial Médico</h1>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
 
-        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Historial Médico</h1>
+                    <p>Mantén el registro de lesiones, tratamientos y recuperaciones</p>
+                </div>
+            </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Jugador ID</th>
-                    <th>Tipo Lesión</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    <th>Tratamiento</th>
-                    <th>Médico</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla"></tbody>
-        </table>
-    </main>
+            <a href="create.html" class="btn btn-success mb-3">+ Registrar Lesión</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jugador ID</th>
+                            <th>Tipo Lesión</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Tratamiento</th>
+                            <th>Médico</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         const API = "http://localhost:3000/proyecto/historialMedico";
@@ -55,7 +76,7 @@
         }
 
         function eliminar(id) {
-            if (confirm("¿Eliminar?")) {
+            if (confirm("¿Confirmar eliminación?")) {
                 $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
             }
         }
@@ -64,5 +85,4 @@
     </script>
 
 </body>
-
 </html>

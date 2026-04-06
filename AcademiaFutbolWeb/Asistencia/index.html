@@ -1,52 +1,57 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Lista de Asistencia</title>
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Bootstrap -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistencia — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
-
-    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container mt-4">
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1>Lista de Asistencia</h1>
-
-            <a href="create.html" class="btn btn-success">
-                Agregar
-            </a>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
         </div>
-        <div class="table-responsive">
-            <table class="table table-primary table-striped">
-                <thead>
-                    <tr>
-                        <th>Jugador ID</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Observaciones</th>
-                        <th>Acciones</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tablademuestradedatos">
-                  
-                </tbody>
-            </table>
-        </div>
-    </main>
+    </nav>
+
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Asistencia</h1>
+                    <p>Registra y controla la asistencia de jugadores a entrenamientos</p>
+                </div>
+            </div>
+
+            <a href="create.html" class="btn btn-success mb-3">+ Registrar Asistencia</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jugador ID</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Observaciones</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablademuestradedatos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         $(document).ready(function () {
-
             listardatos();
 
             function listardatos() {
@@ -55,7 +60,6 @@
                     url: "http://localhost:3000/proyecto/asistencia",
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
                         cargadatos(response);
                     },
                     error: function () {
@@ -69,37 +73,22 @@
                 $tabla.empty();
 
                 data.forEach((elemento) => {
-
+                    let botonActualizar = "";
                     let botonEliminar = "";
 
                     if (elemento._id) {
-                        botonEliminar = `
-                <button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">
-                    Eliminar
-                </button>
-            `;
-                    } else {
-                        botonEliminar = `<span class="text-muted">No eliminable</span>`;
-                    }
-
-                    let botonActualizar = "";
-
-                    if (elemento._id) {
-
-                        botonActualizar = `
-                        <a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a>`;
-                    } else {
-                        botonActualizar = `<span class="text-muted">No actualizable</span>`;
+                        botonActualizar = `<a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a>`;
+                        botonEliminar = `<button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">Eliminar</button>`;
                     }
 
                     let fila = `<tr>
-            <td>${elemento.jugador_id}</td>
-            <td>${elemento.fecha}</td>
-            <td>${elemento.estado}</td>
-            <td>${elemento.observaciones}</td>
-            <td>${botonEliminar}</td>
-            <td>${botonActualizar}</td>
-        </tr>`;
+                        <td>${elemento.jugador_id}</td>
+                        <td>${elemento.fecha}</td>
+                        <td>${elemento.estado}</td>
+                        <td>${elemento.observaciones}</td>
+                        <td>${botonActualizar}</td>
+                        <td>${botonEliminar}</td>
+                    </tr>`;
 
                     $tabla.append(fila);
                 });
@@ -107,7 +96,6 @@
 
             $(document).on("click", ".btn-eliminar", function () {
                 let id = $(this).data("id");
-
                 if (confirm("¿Seguro que deseas eliminar este registro?")) {
                     eliminarDato(id);
                 }
@@ -127,10 +115,8 @@
                     }
                 });
             }
-
         });
     </script>
 
 </body>
-
 </html>

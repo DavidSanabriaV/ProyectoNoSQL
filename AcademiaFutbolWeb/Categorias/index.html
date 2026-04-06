@@ -1,39 +1,56 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Lista de Categorías</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
-    <main class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1>Lista de Categorías</h1>
-            <a href="create.html" class="btn btn-success">Agregar</a>
+
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
         </div>
-        <div class="table-responsive">
-            <table class="table table-primary table-striped">
-                <thead>
-                    <tr>
-                        <th>Nombre Categoría</th>
-                        <th>Rango Edad</th>
-                        <th>Año Competencia</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody id="tablademuestradedatos"></tbody>
-            </table>
-        </div>
-    </main>
+    </nav>
+
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Categorías</h1>
+                    <p>Define las categorías de edad y competencia para los jugadores</p>
+                </div>
+            </div>
+
+            <a href="create.html" class="btn btn-success mb-3">+ Agregar Categoría</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre Categoría</th>
+                            <th>Rango Edad</th>
+                            <th>Año Competencia</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablademuestradedatos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        Academia Fútbol &nbsp;|&nbsp; <span>API REST v1.0.0</span> &nbsp;|&nbsp; Express 5 + MongoDB
+    </footer>
 
     <script>
         $(document).ready(function () {
-
             const API = "http://localhost:3000/proyecto/categorias";
 
             listardatos();
@@ -84,9 +101,8 @@
                     });
                 }
             });
-
         });
     </script>
-</body>
 
+</body>
 </html>
