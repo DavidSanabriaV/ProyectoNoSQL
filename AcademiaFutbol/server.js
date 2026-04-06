@@ -3,10 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../AcademiaFutbolWeb')));
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -14,6 +16,11 @@ mongoose
   .catch((err) => console.log(err));
 
 const PORT = process.env.PORT || 3000;
+
+// Servir index.html en la raíz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../AcademiaFutbolWeb/index.html'));
+});
 
 //Routes CRUD
 app.use("/proyecto/asistencia", require("./routes/asistenciaRoutes"));
