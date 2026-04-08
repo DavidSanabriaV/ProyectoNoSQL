@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const torneosSchema = new mongoose.Schema({
+  _id: { type: Number },
   nombre_torneo: { type: String, required: true },
   categoria: { type: String, required: true },
   fecha_inicio: { type: String, required: true },

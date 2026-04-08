@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Crear Partido</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Nuevo Partido</h1>
+
+        <form id="form">
+            <input type="number" id="equipo_local" placeholder="Equipo Local ID" required class="form-control mb-3">
+            <input type="number" id="equipo_visitante" placeholder="Equipo Visitante ID" required class="form-control mb-3">
+            <input type="date" id="fecha" placeholder="Fecha" required class="form-control mb-3">
+            <input type="text" id="marcador" placeholder="Marcador (ej: 2-1)" required class="form-control mb-3">
+            <input type="text" id="estadio" placeholder="Estadio" required class="form-control mb-3">
+
+            <button class="btn btn-primary">Guardar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: "http://localhost:3000/proyecto/partidos",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    equipo_local: Number($("#equipo_local").val()),
+                    equipo_visitante: Number($("#equipo_visitante").val()),
+                    fecha: $("#fecha").val(),
+                    marcador: $("#marcador").val(),
+                    estadio: $("#estadio").val()
+                }),
+                success: () => {
+                    alert("Partido guardado");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Editar Torneo</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Editar Torneo</h1>
+
+        <form id="form">
+            <input type="text" id="nombre_torneo" class="form-control mb-3">
+            <input type="text" id="categoria" class="form-control mb-3">
+            <input type="date" id="fecha_inicio" class="form-control mb-3">
+            <input type="date" id="fecha_fin" class="form-control mb-3">
+            <select id="estado" class="form-control mb-3">
+                <option value="Activo">Activo</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Pendiente">Pendiente</option>
+            </select>
+
+            <button class="btn btn-primary">Actualizar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        const API = "http://localhost:3000/proyecto/torneos/";
+        const id = new URLSearchParams(window.location.search).get("id");
+
+        $.get(API + id, d => {
+            $("#nombre_torneo").val(d.nombre_torneo);
+            $("#categoria").val(d.categoria);
+            $("#fecha_inicio").val(d.fecha_inicio);
+            $("#fecha_fin").val(d.fecha_fin);
+            $("#estado").val(d.estado);
+        });
+
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: API + id,
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    nombre_torneo: $("#nombre_torneo").val(),
+                    categoria: $("#categoria").val(),
+                    fecha_inicio: $("#fecha_inicio").val(),
+                    fecha_fin: $("#fecha_fin").val(),
+                    estado: $("#estado").val()
+                }),
+                success: () => {
+                    alert("Actualizado correctamente");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

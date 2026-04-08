@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Crear Torneo</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Nuevo Torneo</h1>
+
+        <form id="form">
+            <input type="text" id="nombre_torneo" placeholder="Nombre Torneo" required class="form-control mb-3">
+            <input type="text" id="categoria" placeholder="Categoría" required class="form-control mb-3">
+            <input type="date" id="fecha_inicio" placeholder="Fecha Inicio" required class="form-control mb-3">
+            <input type="date" id="fecha_fin" placeholder="Fecha Fin" required class="form-control mb-3">
+            <select id="estado" required class="form-control mb-3">
+                <option value="">Selecciona Estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Pendiente">Pendiente</option>
+            </select>
+
+            <button class="btn btn-primary">Guardar</button>
+            <a href="index.html" class="btn btn-secondary">Volver</a>
+        </form>
+    </main>
+
+    <script>
+        $("#form").submit(e => {
+            e.preventDefault();
+
+            $.ajax({
+                url: "http://localhost:3000/proyecto/torneos",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    nombre_torneo: $("#nombre_torneo").val(),
+                    categoria: $("#categoria").val(),
+                    fecha_inicio: $("#fecha_inicio").val(),
+                    fecha_fin: $("#fecha_fin").val(),
+                    estado: $("#estado").val()
+                }),
+                success: () => {
+                    alert("Torneo guardado");
+                    location.href = "index.html";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

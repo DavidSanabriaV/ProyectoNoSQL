@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const partidosSchema = new mongoose.Schema({
+  _id: { type: Number },
   equipo_local: { type: Number, required: true },
   equipo_visitante: { type: Number, required: true },
   fecha: { type: String, required: true },

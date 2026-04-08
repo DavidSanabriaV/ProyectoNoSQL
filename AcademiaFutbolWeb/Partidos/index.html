@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Partidos</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>Lista de Partidos</h1>
+
+        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Equipo Local</th>
+                    <th>Equipo Visitante</th>
+                    <th>Fecha</th>
+                    <th>Marcador</th>
+                    <th>Estadio</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tabla"></tbody>
+        </table>
+    </main>
+
+    <script>
+        const API = "http://localhost:3000/proyecto/partidos";
+
+        function cargar() {
+            $.get(API, data => {
+                $("#tabla").empty();
+                data.forEach(e => {
+                    $("#tabla").append(`
+                <tr>
+                <td>${e.equipo_local}</td>
+                <td>${e.equipo_visitante}</td>
+                <td>${e.fecha}</td>
+                <td>${e.marcador}</td>
+                <td>${e.estadio}</td>
+                <td><a href="editar.html?id=${e._id}" class="btn btn-warning btn-sm">Editar</a></td>
+                <td><button onclick="eliminar(${e._id})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                </tr>
+            `);
+                });
+            });
+        }
+
+        function eliminar(id) {
+            if (confirm("¿Eliminar?")) {
+                $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
+            }
+        }
+
+        cargar();
+    </script>
+
+</body>
+
+</html>

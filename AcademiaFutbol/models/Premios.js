@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const premiosSchema = new mongoose.Schema({
+  _id: { type: Number },
   jugador_id: { type: Number, required: true },
   torneo_id: { type: Number, required: true },
   tipo_premio: { type: String, required: true },
