@@ -1,34 +1,34 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Crear</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <!-- Bootstrap CSS v5.2.1 -->
-        <link rel="stylesheet" href="../css/style.css" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Asistencia — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
-    <main>
-        <h1>Ingresar asistencia</h1>
+
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <h1>Registrar Asistencia</h1>
 
         <form id="formularioAsistencia">
-
             <div class="mb-3">
                 <label class="form-label">Jugador ID</label>
                 <input type="number" class="form-control" id="jugador_id" required>
             </div>
-
             <div class="mb-3">
                 <label class="form-label">Fecha</label>
                 <input type="date" class="form-control" id="fecha" required>
             </div>
-
             <div class="mb-3">
                 <label class="form-label">Estado</label>
                 <select class="form-control" id="estado" required>
@@ -37,88 +37,45 @@
                     <option value="Justificado">Justificado</option>
                 </select>
             </div>
-
             <div class="mb-3">
                 <label class="form-label">Observaciones</label>
                 <input type="text" class="form-control" id="observaciones">
             </div>
-
-            <div class="mt-3">
+            <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <button type="reset" class="btn btn-danger">Reset</button>
-
                 <a href="index.html" class="btn btn-secondary">Volver</a>
             </div>
         </form>
     </main>
-    <footer>
-        <!-- place footer here -->
-    </footer>
-    <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function () {
             $("#formularioAsistencia").submit(function (e) {
                 e.preventDefault();
 
-                let datos = {
-                    jugador_id: $("#jugador_id").val(),
-                    fecha: $("#fecha").val(),
-                    estado: $("#estado").val(),
-                    observaciones: $("#observaciones").val()
-                };
-
-                console.log(datos);
-
                 $.ajax({
                     type: "POST",
                     url: "http://localhost:3000/proyecto/asistencia",
-                    data: JSON.stringify(datos),
+                    data: JSON.stringify({
+                        jugador_id: $("#jugador_id").val(),
+                        fecha: $("#fecha").val(),
+                        estado: $("#estado").val(),
+                        observaciones: $("#observaciones").val()
+                    }),
                     contentType: "application/json",
                     dataType: "json",
-                    success: function (response) {
-                        console.log(response);
+                    success: function () {
                         alert("Datos guardados correctamente");
-
-                        // limpiar formulario
-                        $("#formularioAsistencia")[0].reset();
+                        window.location.href = "index.html";
                     },
-                    error: function (error) {
-                        console.error(error);
+                    error: function () {
                         alert("Error al guardar los datos");
                     }
                 });
             });
         });
     </script>
+
 </body>
-
 </html>
-
-<!--
-POST
-
-https://paginas-web-cr.com/Api/apis/ListaCurso.php
-
-
-apis/InsertarCursos.php
-
-    { "nombre":"React 22", "descripcion":"React Junior", "tiempo":"10 Meses", "usuario":"profesor Mario" }
-
-
-
-    apis/ActualizarCursos.php
-
-    { "id":3, "nombre":"React 22", "descripcion":"React Junior", "tiempo":"10 Meses", "usuario":"profesor Mario" }
-
-
-    apis/BorrarCursos.php
-
-    { "id":2 } -->
