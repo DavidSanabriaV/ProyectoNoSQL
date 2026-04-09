@@ -1,64 +1,110 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Premios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premios — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container">
-        <h1>Lista de Premios</h1>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
 
-        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Premios</h1>
+                    <p>Gestión de premios y reconocimientos otorgados a los jugadores</p>
+                </div>
+            </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Jugador ID</th>
-                    <th>Torneo ID</th>
-                    <th>Tipo Premio</th>
-                    <th>Fecha</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla"></tbody>
-        </table>
-    </main>
+            <a href="create.html" class="btn btn-success mb-3">+ Agregar Premio</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jugador ID</th>
+                            <th>Torneo ID</th>
+                            <th>Tipo Premio</th>
+                            <th>Fecha</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablademuestradedatos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+<footer>
+    Academia de Fútbol &nbsp;&mdash;&nbsp; Formación integral de jugadores &nbsp;&mdash;&nbsp; © 2026 Todos los derechos reservados
+</footer>
 
     <script>
-        const API = "http://localhost:3000/proyecto/premios";
+        $(document).ready(function () {
+            const API = "http://localhost:3000/proyecto/premios";
 
-        function cargar() {
-            $.get(API, data => {
-                $("#tabla").empty();
-                data.forEach(e => {
-                    $("#tabla").append(`
-                <tr>
-                <td>${e.jugador_id}</td>
-                <td>${e.torneo_id}</td>
-                <td>${e.tipo_premio}</td>
-                <td>${e.fecha}</td>
-                <td><a href="editar.html?id=${e._id}" class="btn btn-warning btn-sm">Editar</a></td>
-                <td><button onclick="eliminar(${e._id})" class="btn btn-danger btn-sm">Eliminar</button></td>
-                </tr>
-            `);
+            listardatos();
+
+            function listardatos() {
+                $.ajax({
+                    type: "GET",
+                    url: API,
+                    dataType: "json",
+                    success: function (response) {
+                        cargadatos(response);
+                    },
+                    error: function () {
+                        alert("Error al cargar los datos");
+                    }
                 });
-            });
-        }
-
-        function eliminar(id) {
-            if (confirm("¿Eliminar?")) {
-                $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
             }
-        }
 
-        cargar();
+            function cargadatos(data) {
+                const $tabla = $("#tablademuestradedatos");
+                $tabla.empty();
+
+                data.forEach((elemento) => {
+                    let fila = `<tr>
+                        <td>${elemento.jugador_id}</td>
+                        <td>${elemento.torneo_id}</td>
+                        <td>${elemento.tipo_premio}</td>
+                        <td>${elemento.fecha}</td>
+                        <td><a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a></td>
+                        <td><button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">Eliminar</button></td>
+                    </tr>`;
+                    $tabla.append(fila);
+                });
+            }
+
+            $(document).on("click", ".btn-eliminar", function () {
+                let id = $(this).data("id");
+                if (confirm("¿Seguro que deseas eliminar este registro?")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: API + "/" + id,
+                        success: function () {
+                            alert("Eliminado correctamente");
+                            listardatos();
+                        },
+                        error: function () {
+                            alert("Error al eliminar");
+                        }
+                    });
+                }
+            });
+        });
     </script>
 
 </body>
-
 </html>

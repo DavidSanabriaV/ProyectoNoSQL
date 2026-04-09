@@ -1,66 +1,112 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Partidos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partidos — Academia Fútbol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
 
-    <main class="container">
-        <h1>Lista de Partidos</h1>
+    <nav class="navbar">
+        <a href="../index.html" class="navbar-brand">Academia Fútbol</a>
+        <div class="navbar-right">
+            <a href="../index.html" class="btn btn-sm" style="background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.25);">← Volver</a>
+        </div>
+    </nav>
 
-        <a href="create.html" class="btn btn-success mb-3">Agregar</a>
+    <div class="layout">
+        <main class="main">
+            <div class="page-header">
+                <div>
+                    <h1>Partidos</h1>
+                    <p>Registro y seguimiento de partidos jugados por los equipos</p>
+                </div>
+            </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Equipo Local</th>
-                    <th>Equipo Visitante</th>
-                    <th>Fecha</th>
-                    <th>Marcador</th>
-                    <th>Estadio</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="tabla"></tbody>
-        </table>
-    </main>
+            <a href="create.html" class="btn btn-success mb-3">+ Agregar Partido</a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Equipo Local</th>
+                            <th>Equipo Visitante</th>
+                            <th>Fecha</th>
+                            <th>Marcador</th>
+                            <th>Estadio</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablademuestradedatos"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+<footer>
+    Academia de Fútbol &nbsp;&mdash;&nbsp; Formación integral de jugadores &nbsp;&mdash;&nbsp; © 2026 Todos los derechos reservados
+</footer>
 
     <script>
-        const API = "http://localhost:3000/proyecto/partidos";
+        $(document).ready(function () {
+            const API = "http://localhost:3000/proyecto/partidos";
 
-        function cargar() {
-            $.get(API, data => {
-                $("#tabla").empty();
-                data.forEach(e => {
-                    $("#tabla").append(`
-                <tr>
-                <td>${e.equipo_local}</td>
-                <td>${e.equipo_visitante}</td>
-                <td>${e.fecha}</td>
-                <td>${e.marcador}</td>
-                <td>${e.estadio}</td>
-                <td><a href="editar.html?id=${e._id}" class="btn btn-warning btn-sm">Editar</a></td>
-                <td><button onclick="eliminar(${e._id})" class="btn btn-danger btn-sm">Eliminar</button></td>
-                </tr>
-            `);
+            listardatos();
+
+            function listardatos() {
+                $.ajax({
+                    type: "GET",
+                    url: API,
+                    dataType: "json",
+                    success: function (response) {
+                        cargadatos(response);
+                    },
+                    error: function () {
+                        alert("Error al cargar los datos");
+                    }
                 });
-            });
-        }
-
-        function eliminar(id) {
-            if (confirm("¿Eliminar?")) {
-                $.ajax({ url: API + "/" + id, type: "DELETE", success: cargar });
             }
-        }
 
-        cargar();
+            function cargadatos(data) {
+                const $tabla = $("#tablademuestradedatos");
+                $tabla.empty();
+
+                data.forEach((elemento) => {
+                    let fila = `<tr>
+                        <td>${elemento.equipo_local}</td>
+                        <td>${elemento.equipo_visitante}</td>
+                        <td>${elemento.fecha}</td>
+                        <td>${elemento.marcador}</td>
+                        <td>${elemento.estadio}</td>
+                        <td><a href="editar.html?id=${elemento._id}" class="btn btn-warning btn-sm">Editar</a></td>
+                        <td><button class="btn btn-danger btn-sm btn-eliminar" data-id="${elemento._id}">Eliminar</button></td>
+                    </tr>`;
+                    $tabla.append(fila);
+                });
+            }
+
+            $(document).on("click", ".btn-eliminar", function () {
+                let id = $(this).data("id");
+                if (confirm("¿Seguro que deseas eliminar este registro?")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: API + "/" + id,
+                        success: function () {
+                            alert("Eliminado correctamente");
+                            listardatos();
+                        },
+                        error: function () {
+                            alert("Error al eliminar");
+                        }
+                    });
+                }
+            });
+        });
     </script>
 
 </body>
-
 </html>
